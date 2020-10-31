@@ -1,0 +1,31 @@
+{% extends "vacancy/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Регистрация | Джуманджи{% endblock %}
+
+{% block container %}
+    <form method="POST" class="form-group" action="{% url 'register' %}">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-6">
+          {{ form.username|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.email|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.first_name|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.last_name|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.password1|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.password2|as_crispy_field }}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">Регистрация</button>
+    </form>
+{% endblock %}

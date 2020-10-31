@@ -1,0 +1,98 @@
+{% extends 'vacancy/base.html' %}
+
+{% block title %}Моя компания | Джуманджи{% endblock %}
+
+{% block container %}
+
+<div class="row mt-5">
+  <div class="col-12 col-lg-4">
+    <aside class="pt-3 pb-4 px-4 mb-5 card">
+      <h1 class="h4 pt-2 pb-2">Моя компания</h1>
+      <div class="nav flex-column nav-pills">
+        <a class="nav-link active">1. Информация о&nbsp;компании</a>
+        <a class="nav-link" href="{% url 'mycompany_vacancies' %}">2. Вакансии</a>
+      </div>
+    </aside>
+  </div>
+  <div class="col-12 col-lg-8">
+    <div class="card">
+      <div class="card-body px-4 pb-4">
+        <!-- Tab -->
+        <section class="tab-pane fade show active">
+          <h2 class="h4 pt-2 pb-3">Информация о&nbsp;компании</h2>
+
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.extra_tags }} alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <form action="{% url 'company_edit' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+
+              <div class="row">
+              <div class="col-12 col-md-6">
+                <div class="form-group pb-2">
+                  <label class="mb-2 text-dark" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                  {{ form.name }}
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label class="mb-2 text-dark" for="companyLogo">Логотип</label>
+                  <div class="row align-items-center">
+                    <div class="col-6">
+                      {% if logo %}
+                        <img src="{{ logo.url }}" alt="" style="max-width: 120px;height: auto;">
+                      {% else %}
+                        <img src="https://place-hold.it/120x40" alt="" style="max-width: 120px;height: auto;">
+                      {% endif %}
+                    </div>
+                    <div class="col-6" style="position: relative;">
+                      <div class="input-group-prepend" style="position: absolute; top: 0;right: 15px;">
+                        <span class="btn btn-info px-4">{{ form.logo.label }}</span>
+                      </div>
+                      <div class="custom-file" style="">
+                        {{ form.logo }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <div class="form-group pb-2">
+                  <label class="mb-2 text-dark" for="{{ form.employee_count.id_for_label }}">{{ form.employee_count.label }}</label>
+                  {{ form.employee_count }}
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group pb-2">
+                  <label class="mb-2 text-dark" for="{{ form.location.id_for_label }}">{{ form.location.label }}</label>
+                  {{ form.location }}
+                </div>
+              </div>
+            </div>
+            <div class="form-group pb-2">
+              <label class="mb-2 text-dark" for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+              {{ form.description }}
+            </div>
+            <div class="form-group">
+              <input type="submit" class="btn btn-info" value="Сохранить">
+            </div>
+          </form>
+        </section>
+        <!-- END Tab -->
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
